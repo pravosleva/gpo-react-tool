@@ -1,0 +1,13 @@
+.panel, .well {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+.panel > .panel-body {
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.btn-default {
+  color: #666;
+  background-color: #fff;
+  border-color: #ccc;
+}
