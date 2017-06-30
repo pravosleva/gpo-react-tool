@@ -22,6 +22,36 @@ class App extends Component {
       default: break;
     }
   }
+  axiosReqForClientlist() {
+    axios({
+      method: 'get',
+      url: 'http://selection4test.ru/projects/gpo/_examples/clientlist.json',
+      responseType:'json'
+    })
+      .then(function(response) {
+        console.log(typeof response);
+        //this.props.updateClientlist(response.data);
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data);
+          //console.log(error.response.status);
+          //console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message);
+        }
+        //console.log(error.config);
+      });
+
+  }
   render() {
     const { obj } = this.props;
     let clientlist_displayed = obj.clientlist.filter(function(e, i){
@@ -31,13 +61,24 @@ class App extends Component {
       <div className="container">
 
         <h1>Welcome to React</h1>
+
+        <label>Set the clientlist</label>
+        <div className='input-group'>
+          <button type="button"
+            className='btn btn-primary btn-sm'
+            onClick={this.axiosReqForClientlist}>
+            AXIOS GET for clientlist
+          </button>
+        </div>
+        <hr />
+
         <label className={obj.client!==''?'text-success':'text-danger'}>Select the client</label>
         <div className='input-group'>
           <input className='form-control input-sm' type='text' value={obj.tmp_client} onChange={this.updateStateObj.bind(this, 'tmp_client')}/>
           <span className="input-group-btn">
             <button className={'btn btn-primary btn-sm' + (obj.client!==''?'':' disabled')} type="button"
-              onClick={() => {console.log('Here should be GET or POST req...')}}>
-              Get config
+              onClick={() => {console.log('hello world')}}>
+              GET for config
             </button>
           </span>
         </div>
@@ -46,7 +87,6 @@ class App extends Component {
             return (<option key={i}>{e.name} / {e.configURL}</option>)
           }, this)}
         </select>
-
 
       </div>
     );
