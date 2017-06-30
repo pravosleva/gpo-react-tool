@@ -20,7 +20,7 @@ class App extends Component {
         //show({text: `&#10004; Client will changed to ${e.target.value}`, customClass: `alert alert-success`, pos: `top-right`});
         this.props.updateClient(e.target.value);
         this.props.updateTmpClient(e.target.value);
-        show({text: `&#10004; Ok! ConfigURL for this user: ${e.target.value}`, customClass: `alert alert-success`, pos: `top-right`, duration: 60000, pauseOnHover: true});
+        show({text: `&#10004; Ok! ${e.target.value} selected as Client.`, customClass: `alert alert-success`, pos: `top-right`, duration: 60000, pauseOnHover: true});
         break;
       case 'tmp_client':
         this.props.updateTmpClient(e.target.value);
@@ -65,6 +65,10 @@ class App extends Component {
 
   }
   axiosReqForConfig() {
+    if(this.props.obj.client===''){
+      show({text: `&#10008; Will you please select the Client...`, customClass: `alert alert-danger`, pos: `top-right`, pauseOnHover: true});
+      return;
+    };
     show({text: `&#10008; Sorry, this option is Under Construction yet...`, customClass: `alert alert-warning`, pos: `top-right`, duration: 60000, pauseOnHover: true});
   }
   tmpDrop() {
@@ -114,7 +118,7 @@ class App extends Component {
             {
               clientlist_displayed.map(
                 function(e, i) {
-                  return <option key={i} value={e.configURL}>{e.clientName}</option>
+                  return <option key={i} value={e.clientName}>{e.clientName}</option>
                 }, this
               )
             }
