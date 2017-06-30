@@ -24,7 +24,7 @@ const render = () => {
       updateClient={(c) => store.dispatch({ type: 'UPDATE_CLIENT', client: c })}
       updateApplistForClient={(alfc) => store.dispatch({ type: 'UPDATE_APPLIST_FOR_CLIENT', applistForClient: alfc })}
       updateAppForClient={(afc) => store.dispatch({ type: 'UPDATE_APP_FOR_CLIENT', appForClient: afc })}
-      mainURL=''
+      clientlistURL='http://selection4test.ru/projects/gpo/build/_examples/clientlist.json'
     />,
     rootEl
   );

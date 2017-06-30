@@ -4,10 +4,32 @@
 
 React + Redux
 
-## Tasklist
+## Tasklist (1 of 3 are completed)
 
-- [ ] GET req for clientlist
+- [x] GET request for clientlist
+```
+[
+  {
+    "clientName": str,
+    "configURL": str
+  }
+]
+```
+- [ ] POST request for config
+```
+[
+  {
+    "appName": "gimp",
+    "url": "http://pc.dotty.su/gimp.json",
+    "ver": "2.3.4"
+  }
+]
+```
 - [ ] Something else...
+
+## Demo
+
+http://selection4test.ru/projects/gpo/build/index.html
 
 # Original ReadMe
 

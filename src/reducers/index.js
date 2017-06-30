@@ -1,13 +1,7 @@
 export default (
   state = {
-    currentFormState: {
-      client: '', object: '', manager: '', specialist: '', bitrixTaskNumber: ''
-    },
-    clientlist: [
-      {name: 'Local Example 0', configURL: './'},
-      {name: 'Local Example 1', configURL: './'},
-      {name: 'Local Example 2', configURL: './'},
-    ],
+    //currentFormState: {client: '', object: '', manager: '', specialist: '', bitrixTaskNumber: ''},
+    clientlist: [],
     tmp_client: '',
     client: '',
     applistForClient: [],
