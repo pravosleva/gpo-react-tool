@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { show } from 'js-snackbar';
 import '../css/snackbar-custom.css';
+import Modal from './Modal';
+
 show({text: '&#10004; Test msg', customClass: `alert alert-warning`, pos: `top-right`});
 
 class App extends Component {
@@ -87,7 +89,7 @@ class App extends Component {
     return (
       <div className="container">
 
-        <h1>Welcome to React</h1>
+        <h1>Clientlist Section</h1>
 
         <label>Set the clientlist</label>
         <div className='input-group'>
@@ -97,9 +99,8 @@ class App extends Component {
             AXIOS GET for clientlist
           </button>
         </div>
-        <hr />
 
-        <div style={{display: clientlistSearchingDisplay}}>
+        <div style={{display: clientlistSearchingDisplay, }}>
           <label className={obj.client!==''?'text-success':'text-danger'}>Select the client</label>
           <div className='input-group'>
             <input className='form-control input-sm' type='text' value={obj.tmp_client} onChange={this.updateStateObj.bind(this, 'tmp_client')}/>
@@ -124,6 +125,15 @@ class App extends Component {
             }
           </select>
         </div>
+        <hr />
+
+        <h1>App select Section</h1>
+        <p>Under construction...</p>
+        <hr />
+
+        <h1>Modal 1 Section</h1>
+        <p>Under construction...</p>
+        <Modal key={0} />
 
       </div>
     );

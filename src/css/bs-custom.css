@@ -11,3 +11,7 @@
   background-color: #fff;
   border-color: #ccc;
 }
+
+.input-group .form-control, .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
+  z-index: 0 !important;
+}
