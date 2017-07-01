@@ -4,9 +4,9 @@
 
 React + Redux
 
-## Tasklist (1 of 3 are completed)
+## Tasklist (2 of 4 are completed)
 
-- [x] GET request for clientlist
+- [x] GET request for clientlist (targetlist). Response should be same as:
 ```
 [
   {
@@ -15,7 +15,7 @@ React + Redux
   }
 ]
 ```
-- [ ] POST request for config
+- [ ] POST request to configURL for this Client (Target). Response should be same as:
 ```
 [
   {
@@ -25,7 +25,8 @@ React + Redux
   }
 ]
 ```
-- [ ] Something else...
+- [x] Text editor for create new json.
+- [ ] POST request to Back-end for send new json.
 
 ## Demo
 

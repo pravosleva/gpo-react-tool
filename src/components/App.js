@@ -5,16 +5,21 @@ import axios from 'axios';
 import { show } from 'js-snackbar';
 import '../css/snackbar-custom.css';
 import Modal from './Modal';
+//import RichTextEditor from 'react-rte';
+import '../css/snackbar-custom.css';
+import MyStatefulEditor from './MyStatefulEditor';
 
-show({text: '&#10004; Test msg', customClass: `alert alert-warning`, pos: `top-right`});
+show({text: '&#10004; Test msg', customClass: `alert alert-warning`, pos: `top-right`, duration:60000});
 
 class App extends Component {
   constructor(props){
     super(props);
+
     this.axiosReqForClientlist = this.axiosReqForClientlist.bind(this);
     this.axiosReqForConfig = this.axiosReqForConfig.bind(this);
     this.tmpDrop = this.tmpDrop.bind(this);
   }
+
   updateStateObj(propName, e) {
     //console.log(e.target.value);
     switch(propName){
@@ -89,25 +94,23 @@ class App extends Component {
     return (
       <div className="container">
 
-        <h1>Clientlist Section</h1>
-
-        <label>Set the clientlist</label>
+        <h1>Clientlist (targetlist) Section</h1>
+        <label>Set the clientlist (targerlist)</label>
         <div className='input-group'>
           <button type="button"
             className='btn btn-primary btn-sm'
             onClick={this.axiosReqForClientlist}>
-            AXIOS GET for clientlist
+            AXIOS GET for clientlist (targetlist)
           </button>
         </div>
-
         <div style={{display: clientlistSearchingDisplay, }}>
-          <label className={obj.client!==''?'text-success':'text-danger'}>Select the client</label>
+          <label className={obj.client!==''?'text-success':'text-danger'}>Select the client (target)</label>
           <div className='input-group'>
             <input className='form-control input-sm' type='text' value={obj.tmp_client} onChange={this.updateStateObj.bind(this, 'tmp_client')}/>
             <span className="input-group-btn">
               <button className='btn btn-default btn-sm' type="button"
                 onClick={this.tmpDrop}>
-                REMOVE clientlist from store
+                REMOVE clientlist (targetlist) from store
               </button>
               <button className={'btn btn-primary btn-sm' + (obj.client!==''?'':' disabled')} type="button"
                 onClick={this.axiosReqForConfig}>
@@ -128,12 +131,22 @@ class App extends Component {
         <hr />
 
         <h1>App select Section</h1>
+        <label>You will select the apps to unstall for targer</label>
         <p>Under construction...</p>
         <hr />
 
-        <h1>Modal 1 Section</h1>
-        <p>Under construction...</p>
-        <Modal key={0} />
+        <div style={{display:'none'}}>
+          <h1>Modal 1 Section</h1>
+          <p>Under construction...</p>
+          <Modal key={0}></Modal>
+          <hr />
+        </div>
+
+        <h1>react-rte test</h1>
+        <label>You could make new json</label>
+        <MyStatefulEditor updateFormState={this.props.updateFormState} />
+        <label>Result</label>
+        <input className='form-control input-sm' type='text' value={obj.currentFormState.editorString} disabled />
 
       </div>
     );
@@ -148,6 +161,7 @@ App.propTypes = {
   updateApplistForClient: PropTypes.func.isRequired,
   updateAppForClient: PropTypes.func.isRequired,
   clientlistURL: PropTypes.string.isRequired,
+  updateFormState: PropTypes.func.isRequired,
 }
 
 export default App;

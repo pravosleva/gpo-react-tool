@@ -25,6 +25,7 @@ const render = () => {
       updateApplistForClient={(alfc) => store.dispatch({ type: 'UPDATE_APPLIST_FOR_CLIENT', applistForClient: alfc })}
       updateAppForClient={(afc) => store.dispatch({ type: 'UPDATE_APP_FOR_CLIENT', appForClient: afc })}
       clientlistURL='http://selection4test.ru/projects/gpo/build/_examples/clientlist.json'
+      updateFormState={(cfs) => store.dispatch({ type: 'UPDATE_FORM_STATE', currentFormState: cfs })}
     />,
     rootEl
   );

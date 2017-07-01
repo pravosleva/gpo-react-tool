@@ -1,0 +1,35 @@
+.RichTextEditor__root___2QXK- {
+  color: white;
+  background: rgb(50, 50, 50);
+  font-family: Courier;
+
+  /*background-color: #f89406;*/
+  border: 2px solid #555;
+  color: #ffffff;
+}
+.RichTextEditor__editor___1QqIU .RichTextEditor__paragraph___3NTf9, .RichTextEditor__editor___1QqIU pre {
+  margin: 0px 0;
+  margin-top: 0px;
+}
+.EditorToolbar__root___3_Aqz {
+  border-top: 1px solid #444;
+  opacity: .55;
+}
+.Button__root___1gz0c {
+  display: inline-block;
+  margin: 0 5px 0 0;
+  padding: 3px 8px;
+  height: 30px;
+  line-height: 22px;
+  box-sizing: border-box;
+  background: none #fdfdfd;
+  background: linear-gradient(180deg,#fdfdfd 0,#f6f7f8);
+  border: 1px solid #999;
+  border-radius: 2px;
+  color: #333;
+  text-decoration: none;
+  font-size: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}

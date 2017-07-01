@@ -1,6 +1,6 @@
 export default (
   state = {
-    //currentFormState: {client: '', object: '', manager: '', specialist: '', bitrixTaskNumber: ''},
+    currentFormState: {editorString: ''},
     clientlist: [],
     tmp_client: '',
     client: '',
@@ -9,9 +9,8 @@ export default (
   },
   action
 ) => {
-  //console.log(action)
   switch (action.type) {
-    case '_UPDATE_FORM_STATE': state.currentFormState = action.currentFormState; return state;
+    case 'UPDATE_FORM_STATE': state.currentFormState = action.currentFormState; return state;
     case 'UPDATE_TMP_CLIENT':
       state.tmp_client = action.tmp_client;
       return state;
