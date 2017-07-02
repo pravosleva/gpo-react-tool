@@ -30,8 +30,8 @@ textarea {
 @media (min-width:992px){
   .special {
     /*transform: rotate3d(1, 0, .2, -8deg);*/
-    /*transform: translate(0px,0px) scaleX(1.2) rotate3d(1, 0, .2, -8deg);*/
-    transform: translate(-15px,0px) scaleX(1.12) rotate3d(1, 0, .2, -8deg);
+    transform: translate(0px,0px) rotate3d(1, 0, .2, -9deg);
+    /*transform: translate(-15px,0px) scaleX(1.12) rotate3d(1, 0, .2, -8deg);*/
     font-weight: bold;
     /*z-index: -1;*/
     opacity: .6;
@@ -53,10 +53,10 @@ li {
 }
 li:before {
   /* FontAwesome Unicode */
-  /*
+
   content: "\f061";
   font-family: FontAwesome;
-  */
+
   display: inline-block;
   margin-left: -1.3em; /* same as padding-left set on li */
   width: 1.3em; /* same as padding-left set on li */

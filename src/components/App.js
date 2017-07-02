@@ -192,13 +192,7 @@ class App extends Component {
     let clientlist_displayed = obj.clientlist.filter(function(e, i){
       return e.clientName.toLowerCase().includes(obj.tmp_client.toLowerCase())
     }, this);
-    let clientlistSearchingDisplay;
     let applistForClient = obj.applistForClient;
-
-    obj.clientlist.length!==0?clientlistSearchingDisplay='block':clientlistSearchingDisplay='none';
-
-    let installBtnDisplay;
-    this.state._ids_appsToInstall.length!==0?installBtnDisplay="block":installBtnDisplay="none";
 
     return (
       <div className="container">
@@ -215,14 +209,15 @@ class App extends Component {
                 AXIOS GET for clientlist
               </button>
             </div>
-            <div style={{display: clientlistSearchingDisplay}}>
+            <div style={{display:(obj.clientlist.length!==0?'block':'none')}}>
               <label className={obj.client.clientName!==''?'text-success':'text-danger'}>Select the client (target)</label>
               <div className='input-group'>
                 <input className='form-control input-sm' type='text' value={obj.tmp_client} onChange={this.updateStateObj.bind(this, 'tmp_client')}/>
                 <span className="input-group-btn">
                   <button className='btn btn-default btn-sm' type="button"
-                    onClick={this.fullDrop}>
-                    REMOVE clientlist from store
+                    onClick={this.fullDrop}
+                    title='Remove clientlist from store'>
+                    REM
                   </button>
                   <button className={'btn btn-primary btn-sm' + (obj.client.clientName!==''?'':' disabled')} type="button"
                     onClick={this.axiosReqForConfig}>
@@ -242,20 +237,22 @@ class App extends Component {
             </div>
           </div>
           <div className='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
-            <label>You will select the apps to install on client PC</label>
-            <ul>
-              {
-                applistForClient.map(function(e, i){ return <li><input type="checkbox" value={e._id} onClick={this.checkboxTest.bind(this)} />{e.appName}</li> }, this)
-              }
-            </ul>
-            <div style={{display:installBtnDisplay}}>
-              <label>You could to make request to Back-end to install the program on client PC</label>
-              <div className='btn-group'>
-                <button type="button"
-                  className='btn btn-primary btn-sm'
-                  onClick={this.axiosReqToInstall}>
-                  AXIOS GET to install
-                </button>
+            <div style={{display:(applistForClient.length!==0?"block":"none")}}>
+              <label>You will select the apps to install on client PC</label>
+              <ul>
+                {
+                  applistForClient.map(function(e, i){ return <li><input type="checkbox" value={e._id} onClick={this.checkboxTest.bind(this)} />{e.appName}</li> }, this)
+                }
+              </ul>
+              <div style={{display:(this.state._ids_appsToInstall.length!==0?"block":"none")}}>
+                <label>You could to make request to Back-end to install the program on client PC</label>
+                <div className='btn-group'>
+                  <button type="button"
+                    className='btn btn-primary btn-sm'
+                    onClick={this.axiosReqToInstall}>
+                    AXIOS GET to install
+                  </button>
+                </div>
               </div>
             </div>
           </div>
