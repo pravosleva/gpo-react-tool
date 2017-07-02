@@ -1,12 +1,12 @@
-# The gpo wrench
+# The react-wrench for (gpo project)[https://github.com/birdatdotty/my_gpo]
 
 ## Stack
 
 React + Redux
 
-## Tasklist (3 of 6 are completed)
+## Tasklist (4 of 6 are completed)
 
-- [x] GET request for clientlist (targetlist). Response should be same as:
+- [x] **GET request for clientlist (targetlist).** Response should be same as:
 ```
 [
   {
@@ -16,7 +16,7 @@ React + Redux
 ]
 ```
 After that resp has taken new prop `_id` will added to each client. Don't use this prop name on Back-end.
-- [x] GET request to configURL for this Client (Target). Response should be same as (for example):
+- [x] **GET request to configURL for this Client (Target).** Response should be same as (for example):
 ```
 [
   {
@@ -26,14 +26,15 @@ After that resp has taken new prop `_id` will added to each client. Don't use th
   }
 ]
 ```
-- [ ] Applist should be displayed as checkboxlist. User should to select the appName to install to Client (Target).
-- [ ] GET request to Back-end to install the particular app.
-- [x] Text editor to create new json.
-- [ ] POST request to Back-end to create new json.
+After that resp has taken new prop `_id` will added to each app. Don't use this prop name on Back-end.
+- [x] Applist should be displayed as checkboxlist. User should to select the appName to install to Client (Target).
+- [ ] **GET request to Back-end to install the particular app.** _It is necessary to clarify this request format._
+- [x] Text editor to create new json as new config for the client.
+- [ ] **POST request to Back-end to create new json.** _It is necessary to clarify this request format._
 
 ## Demo
 
-http://selection4test.ru/projects/gpo/build/index.html
+[Link](http://selection4test.ru/projects/gpo/build/index.html)
 
 # Original ReadMe
 

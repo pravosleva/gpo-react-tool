@@ -15,11 +15,14 @@ show({text: '&#10004; Last Update at 2017-07-02', customClass: `alert alert-warn
 class App extends Component {
   constructor(props){
     super(props);
-
+    this.state = {
+      _ids_appsToInstall: []
+    }
     this.axiosReqForClientlist = this.axiosReqForClientlist.bind(this);
     this.axiosReqForConfig = this.axiosReqForConfig.bind(this);
     this.fullDrop = this.fullDrop.bind(this);
     this.axiosReqToCreateNewJSON = this.axiosReqToCreateNewJSON.bind(this);
+    this.axiosReqToInstall = this.axiosReqToInstall.bind(this);
   }
 
   updateStateObj(propName, e) {
@@ -33,17 +36,23 @@ class App extends Component {
         client_to_state = obj.clientlist.filter(function(el, i){return el._id===e.target.value}, this)[0];
         this.props.updateClient(client_to_state);
         this.props.updateTmpClient(client_to_state.clientName);
-        show({text: `&#10004; Ok! ${client_to_state.clientName} selected as Client.`, customClass: `alert alert-success`, pos: `top-center`, duration: 2000, pauseOnHover: true});
+        show({text: `&#10004; Ok! ${client_to_state.clientName} selected as Client.`, customClass: `alert alert-success`, pos: `top-center`, duration: 5000, pauseOnHover: true});
+
+        this.setState({_ids_appsToInstall:[]});
         break;
       case 'tmp_client':
         this.props.updateTmpClient(e.target.value);
         this.props.updateClient({clientName:'', configURL:'', _id:''});
         this.props.updateApplistForClient([]);
+
+        this.setState({_ids_appsToInstall:[]});
         break;
       default: break;
     }
   }
   axiosReqForClientlist() {
+    this.setState({_ids_appsToInstall:[]});
+
     let self = this;
     let _getUUID = () => {
       let newUUID = ('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -69,7 +78,7 @@ class App extends Component {
         });
         // --- Tested.
         self.props.updateClientlist(clientlist);
-        show({text: `&#10004; It's Ok: ${clientlist.length} clients has taken from Back-end...`, customClass: `alert alert-success`, pos: `top-center`, duration: 10000, pauseOnHover: true});
+        show({text: `&#10004; It's Ok: ${clientlist.length} clients has taken from Back-end...`, customClass: `alert alert-success`, pos: `top-center`, duration: 5000, pauseOnHover: true});
       })
       .catch(function (error) {
         if (error.response) {
@@ -92,23 +101,38 @@ class App extends Component {
 
   }
   axiosReqForConfig() {
+    this.setState({_ids_appsToInstall:[]});
+
     let configURL = this.props.obj.client.configURL;
+    let self = this;
+    let _getUUID = () => {
+      let newUUID = ('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        let r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
+      }));
+      return newUUID;
+    };
     if(this.props.obj.client===''){
-      show({text: `&#10008; Will you please select the Client...`, customClass: `alert alert-danger`, duration: 2000, pos: `top-center`, pauseOnHover: true});
+      show({text: `&#10008; Will you please select the Client...`, customClass: `alert alert-danger`, duration: 5000, pos: `top-center`, pauseOnHover: true});
       return;
     }else{
       //console.log(`${configURL}`);
       //show({text: `&#10004; It's Ok: GET req will send to ${configURL}`, customClass: `alert alert-success`, pos: `top-center`, duration: 10000, pauseOnHover: true});
     };
-    let self = this;
     axios({
       method: 'get',
       url: self.props.obj.client.configURL,
       responseType:'json'
     })
       .then((response)=>{
-        self.props.updateApplistForClient(response.data);
-        show({text: `&#10004; It's Ok: ${JSON.stringify(response.data)}`, customClass: `alert alert-success`, pos: `top-center`, duration: 60000, pauseOnHover: true});
+        let applistForClient = response.data;
+        // --- Need to create new prop '_id' as unique ID for this client (for usage in Front-end only)
+        applistForClient.map((e, i)=>{
+          e._id = _getUUID();
+        });
+        // ---
+        self.props.updateApplistForClient(applistForClient);
+        show({text: `&#10004; It's Ok: ${JSON.stringify(applistForClient.length)} apps are possible to install for this client.`, customClass: `alert alert-success`, pos: `top-center`, duration: 5000, pauseOnHover: true});
       })
       .catch(function (error) {
         if (error.response) {
@@ -129,14 +153,38 @@ class App extends Component {
         //console.log(error.config);
       });
   }
+  componentDidUpdate() {
+    console.log(`_ids_appsToInstall.length = ${this.state._ids_appsToInstall.length}: ${JSON.stringify(this.state._ids_appsToInstall)}`);
+  }
+  checkboxTest(e) {
+    //console.log(e.target.value);
+    let _ids_appsToInstall = this.state._ids_appsToInstall,
+      included = false, _id;
+    _ids_appsToInstall.map((el, i)=>{ if(el===e.target.value){ included = true; _id = i } });
+    if(included===true){
+      // В массиве он есть - Удалить элемент...
+      _ids_appsToInstall.splice(_id, 1);
+    }else{
+      // В массиве его нет - Добавить элемент...
+      _ids_appsToInstall.push(e.target.value);
+    }
+    this.setState({ _ids_appsToInstall });
+  }
   fullDrop() {
     this.props.updateClientlist([]);
     this.props.updateTmpClient('');
     this.props.updateClient({clientName:'', configURL:'', _id:''});
     this.props.updateApplistForClient([]);
+    this.setState({_ids_appsToInstall:[]});
   }
   axiosReqToCreateNewJSON() {
-    show({text: `&#10008; Sorry, this option is Under Construction yet...`, customClass: `alert alert-warning`, pos: `top-center`, duration: 2000, pauseOnHover: true});
+    show({text: `&#10008; Sorry, this option is Under Construction yet...`, customClass: `alert alert-warning`, pos: `top-center`, duration: 5000, pauseOnHover: true});
+    // See this.props.obj.currentFormState.editorString
+    //..
+  }
+  axiosReqToInstall() {
+    show({text: `&#10008; Sorry, this option is Under Construction yet...`, customClass: `alert alert-warning`, pos: `top-center`, duration: 5000, pauseOnHover: true});
+    // See this.state._ids_appsToInstall
     //..
   }
   render() {
@@ -144,11 +192,14 @@ class App extends Component {
     let clientlist_displayed = obj.clientlist.filter(function(e, i){
       return e.clientName.toLowerCase().includes(obj.tmp_client.toLowerCase())
     }, this);
-    //display={this.state.addContainerFormOpened ? 'block' : 'none'}
     let clientlistSearchingDisplay;
     let applistForClient = obj.applistForClient;
-    //..
+
     obj.clientlist.length!==0?clientlistSearchingDisplay='block':clientlistSearchingDisplay='none';
+
+    let installBtnDisplay;
+    this.state._ids_appsToInstall.length!==0?installBtnDisplay="block":installBtnDisplay="none";
+
     return (
       <div className="container">
 
@@ -156,7 +207,8 @@ class App extends Component {
         <div className='row'>
           <div className='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
             <label>Set the clientlist</label>
-            <div className='input-group'>
+            <br />
+            <div className='btn-group'>
               <button type="button"
                 className='btn btn-primary btn-sm'
                 onClick={this.axiosReqForClientlist}>
@@ -190,13 +242,22 @@ class App extends Component {
             </div>
           </div>
           <div className='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
-            <label>You will select the apps to unstall on client PC</label>
+            <label>You will select the apps to install on client PC</label>
             <ul>
               {
-                applistForClient.map(function(e, i){ return <li>{e.appName}</li> })
+                applistForClient.map(function(e, i){ return <li><input type="checkbox" value={e._id} onClick={this.checkboxTest.bind(this)} />{e.appName}</li> }, this)
               }
             </ul>
-            <p>Under construction...</p>
+            <div style={{display:installBtnDisplay}}>
+              <label>You could to make request to Back-end to install the program on client PC</label>
+              <div className='btn-group'>
+                <button type="button"
+                  className='btn btn-primary btn-sm'
+                  onClick={this.axiosReqToInstall}>
+                  AXIOS GET to install
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <hr />

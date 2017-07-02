@@ -18,8 +18,8 @@ body {
 }
 
 label {
-  margin-top: 5px;
-  margin-bottom: 3px;
+  margin-top: 5px !important;
+  margin-bottom: 3px !important;;
 }
 
 textarea {
@@ -52,10 +52,17 @@ li {
   padding-left: 1.3em;
 }
 li:before {
-  content: "\f00c"; /* FontAwesome Unicode */
+  /* FontAwesome Unicode */
+  /*
+  content: "\f061";
   font-family: FontAwesome;
+  */
   display: inline-block;
   margin-left: -1.3em; /* same as padding-left set on li */
   width: 1.3em; /* same as padding-left set on li */
   color: #666;
+}
+
+input[type="checkbox"] {
+  margin-right: 5px !important;
 }
