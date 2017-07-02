@@ -1,18 +1,20 @@
-
 @font-face {
-    font-family:'FontAwesome';
-    src: url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.eot');
-    src: url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
-         url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.woff2') format('woff2'),
-         url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.woff') format('woff'),
-         url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.ttf') format('truetype'),
-         url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.svg') format('svg');
+  font-family:'FontAwesome';
+  src: url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.eot');
+  src: url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+       url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.woff2') format('woff2'),
+       url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.woff') format('woff'),
+       url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.ttf') format('truetype'),
+       url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/fonts/fontawesome-webfont.svg') format('svg');
 }
 
 body {
   margin: 0;
   padding: 0;
+  padding-top: 50px;
+  padding-bottom: 50px;
   font-family: Roboto, sans-serif;
+  overflow-x: hidden;
 }
 
 label {
@@ -20,7 +22,27 @@ label {
   margin-bottom: 3px;
 }
 
-textarea { position:relative; max-width: 100%; }
+textarea {
+  position:relative; max-width: 100%;
+  resize: none;
+  font-family: Courier !important;
+}
+@media (min-width:992px){
+  .special {
+    /*transform: rotate3d(1, 0, .2, -8deg);*/
+    /*transform: translate(0px,0px) scaleX(1.2) rotate3d(1, 0, .2, -8deg);*/
+    transform: translate(-15px,0px) scaleX(1.12) rotate3d(1, 0, .2, -8deg);
+    font-weight: bold;
+    /*z-index: -1;*/
+    opacity: .6;
+  }
+}@media(max-width:992px){
+  .special {
+    /*transform: rotate3d(1, 0, .2, -8deg);*/
+    transform: translate(0px,0px) scaleX(1.062) rotate3d(1, 0, .2, -8deg);
+    font-weight: bold;
+  }
+}
 
 ul {
   list-style: none;

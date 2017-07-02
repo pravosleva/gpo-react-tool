@@ -4,7 +4,7 @@
 
 React + Redux
 
-## Tasklist (2 of 4 are completed)
+## Tasklist (3 of 6 are completed)
 
 - [x] GET request for clientlist (targetlist). Response should be same as:
 ```
@@ -15,7 +15,8 @@ React + Redux
   }
 ]
 ```
-- [ ] POST request to configURL for this Client (Target). Response should be same as:
+After that resp has taken new prop `_id` will added to each client. Don't use this prop name on Back-end.
+- [x] GET request to configURL for this Client (Target). Response should be same as (for example):
 ```
 [
   {
@@ -25,8 +26,10 @@ React + Redux
   }
 ]
 ```
-- [x] Text editor for create new json.
-- [ ] POST request to Back-end for send new json.
+- [ ] Applist should be displayed as checkboxlist. User should to select the appName to install to Client (Target).
+- [ ] GET request to Back-end to install the particular app.
+- [x] Text editor to create new json.
+- [ ] POST request to Back-end to create new json.
 
 ## Demo
 

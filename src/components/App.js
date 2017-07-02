@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../css/App.css';
+import '../css/index.css';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { show } from 'js-snackbar';
@@ -9,7 +10,7 @@ import Modal from './Modal';
 import '../css/snackbar-custom.css';
 import MyStatefulEditor from './MyStatefulEditor';
 
-show({text: '&#10004; Test msg', customClass: `alert alert-warning`, pos: `top-right`, duration:60000});
+show({text: '&#10004; Last Update at 2017-07-02', customClass: `alert alert-warning`, pos: `top-center`, duration:5000});
 
 class App extends Component {
   constructor(props){
@@ -17,71 +18,126 @@ class App extends Component {
 
     this.axiosReqForClientlist = this.axiosReqForClientlist.bind(this);
     this.axiosReqForConfig = this.axiosReqForConfig.bind(this);
-    this.tmpDrop = this.tmpDrop.bind(this);
+    this.fullDrop = this.fullDrop.bind(this);
+    this.axiosReqToCreateNewJSON = this.axiosReqToCreateNewJSON.bind(this);
   }
 
   updateStateObj(propName, e) {
     //console.log(e.target.value);
     switch(propName){
       case 'client':
-        //show({text: `&#10004; Client will changed to ${e.target.value}`, customClass: `alert alert-success`, pos: `top-right`});
-        this.props.updateClient(e.target.value);
-        this.props.updateTmpClient(e.target.value);
-        show({text: `&#10004; Ok! ${e.target.value} selected as Client.`, customClass: `alert alert-success`, pos: `top-right`, duration: 60000, pauseOnHover: true});
+        /*  Remember:
+            e.target.value - is _id of the client here.
+        */
+        let obj = this.props.obj, client_to_state;
+        client_to_state = obj.clientlist.filter(function(el, i){return el._id===e.target.value}, this)[0];
+        this.props.updateClient(client_to_state);
+        this.props.updateTmpClient(client_to_state.clientName);
+        show({text: `&#10004; Ok! ${client_to_state.clientName} selected as Client.`, customClass: `alert alert-success`, pos: `top-center`, duration: 2000, pauseOnHover: true});
         break;
       case 'tmp_client':
         this.props.updateTmpClient(e.target.value);
-        this.props.updateClient("");
+        this.props.updateClient({clientName:'', configURL:'', _id:''});
+        this.props.updateApplistForClient([]);
         break;
       default: break;
     }
   }
   axiosReqForClientlist() {
     let self = this;
+    let _getUUID = () => {
+      let newUUID = ('xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        let r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
+      }));
+      return newUUID;
+    };
     axios({
       method: 'get',
       url: self.props.clientlistURL,
-      //url: './clientlist.json', // from _examples
+      //url: './_examples/clientlist.json', // from ./_examples
       //url: 'http://selection4test.ru/projects/gpo/_examples/clientlist.json', // from tester
       //url: 'https://typeahead-js-twitter-api-proxy.herokuapp.com/demo/search?q=tst',
       responseType:'json'
     })
       .then((response)=>{
         //console.log(typeof response);
-        self.props.updateClientlist(response.data);
-        show({text: `&#10004; It's Ok: ${JSON.stringify(response.data)}`, customClass: `alert alert-success`, pos: `top-right`, duration: 60000, pauseOnHover: true});
+        let clientlist = response.data;
+        // --- Need to create new prop '_id' as unique ID for this client (for usage in Front-end only)
+        clientlist.map((e, i)=>{
+          e._id = _getUUID();
+        });
+        // --- Tested.
+        self.props.updateClientlist(clientlist);
+        show({text: `&#10004; It's Ok: ${clientlist.length} clients has taken from Back-end...`, customClass: `alert alert-success`, pos: `top-center`, duration: 10000, pauseOnHover: true});
       })
       .catch(function (error) {
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
-          show({text: `&#10008; Error response: ${error.response.data}`, customClass: `alert alert-danger`, pos: `top-right`, duration: 60000, pauseOnHover: true});
+          show({text: `&#10008; Error response: ${error.response.data}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
           //console.log(error.response.status);
           //console.log(error.response.headers);
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
           // http.ClientRequest in node.js
-          show({text: `&#10008; Error request: ${error.config.url}`, customClass: `alert alert-danger`, pos: `top-right`, duration: 60000, pauseOnHover: true});
+          show({text: `&#10008; Error request: ${error.config.url}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
         } else {
           // Something happened in setting up the request that triggered an Error
-          show({text: `&#10008; Error: ${error.message}`, customClass: `alert alert-danger`, pos: `top-right`, duration: 60000, pauseOnHover: true});
+          show({text: `&#10008; Error: ${error.message}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
         }
         //console.log(error.config);
       });
 
   }
   axiosReqForConfig() {
+    let configURL = this.props.obj.client.configURL;
     if(this.props.obj.client===''){
-      show({text: `&#10008; Will you please select the Client...`, customClass: `alert alert-danger`, pos: `top-right`, pauseOnHover: true});
+      show({text: `&#10008; Will you please select the Client...`, customClass: `alert alert-danger`, duration: 2000, pos: `top-center`, pauseOnHover: true});
       return;
+    }else{
+      //console.log(`${configURL}`);
+      //show({text: `&#10004; It's Ok: GET req will send to ${configURL}`, customClass: `alert alert-success`, pos: `top-center`, duration: 10000, pauseOnHover: true});
     };
-    show({text: `&#10008; Sorry, this option is Under Construction yet...`, customClass: `alert alert-warning`, pos: `top-right`, duration: 60000, pauseOnHover: true});
+    let self = this;
+    axios({
+      method: 'get',
+      url: self.props.obj.client.configURL,
+      responseType:'json'
+    })
+      .then((response)=>{
+        self.props.updateApplistForClient(response.data);
+        show({text: `&#10004; It's Ok: ${JSON.stringify(response.data)}`, customClass: `alert alert-success`, pos: `top-center`, duration: 60000, pauseOnHover: true});
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          show({text: `&#10008; Error response: ${error.response.data}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
+          //console.log(error.response.status);
+          //console.log(error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          show({text: `&#10008; Error request: ${error.config.url}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          show({text: `&#10008; Error: ${error.message}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
+        }
+        //console.log(error.config);
+      });
   }
-  tmpDrop() {
+  fullDrop() {
     this.props.updateClientlist([]);
-    this.props.updateTmpClient("");
-    this.props.updateClient("");
+    this.props.updateTmpClient('');
+    this.props.updateClient({clientName:'', configURL:'', _id:''});
+    this.props.updateApplistForClient([]);
+  }
+  axiosReqToCreateNewJSON() {
+    show({text: `&#10008; Sorry, this option is Under Construction yet...`, customClass: `alert alert-warning`, pos: `top-center`, duration: 2000, pauseOnHover: true});
+    //..
   }
   render() {
     const { obj } = this.props;
@@ -90,63 +146,97 @@ class App extends Component {
     }, this);
     //display={this.state.addContainerFormOpened ? 'block' : 'none'}
     let clientlistSearchingDisplay;
+    let applistForClient = obj.applistForClient;
+    //..
     obj.clientlist.length!==0?clientlistSearchingDisplay='block':clientlistSearchingDisplay='none';
     return (
       <div className="container">
 
-        <h1>Clientlist (targetlist) Section</h1>
-        <label>Set the clientlist (targerlist)</label>
-        <div className='input-group'>
-          <button type="button"
-            className='btn btn-primary btn-sm'
-            onClick={this.axiosReqForClientlist}>
-            AXIOS GET for clientlist (targetlist)
-          </button>
-        </div>
-        <div style={{display: clientlistSearchingDisplay, }}>
-          <label className={obj.client!==''?'text-success':'text-danger'}>Select the client (target)</label>
-          <div className='input-group'>
-            <input className='form-control input-sm' type='text' value={obj.tmp_client} onChange={this.updateStateObj.bind(this, 'tmp_client')}/>
-            <span className="input-group-btn">
-              <button className='btn btn-default btn-sm' type="button"
-                onClick={this.tmpDrop}>
-                REMOVE clientlist (targetlist) from store
+        <h1>Clientlist Section</h1>
+        <div className='row'>
+          <div className='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+            <label>Set the clientlist</label>
+            <div className='input-group'>
+              <button type="button"
+                className='btn btn-primary btn-sm'
+                onClick={this.axiosReqForClientlist}>
+                AXIOS GET for clientlist
               </button>
-              <button className={'btn btn-primary btn-sm' + (obj.client!==''?'':' disabled')} type="button"
-                onClick={this.axiosReqForConfig}>
-                GET for config
-              </button>
-            </span>
+            </div>
+            <div style={{display: clientlistSearchingDisplay}}>
+              <label className={obj.client.clientName!==''?'text-success':'text-danger'}>Select the client (target)</label>
+              <div className='input-group'>
+                <input className='form-control input-sm' type='text' value={obj.tmp_client} onChange={this.updateStateObj.bind(this, 'tmp_client')}/>
+                <span className="input-group-btn">
+                  <button className='btn btn-default btn-sm' type="button"
+                    onClick={this.fullDrop}>
+                    REMOVE clientlist from store
+                  </button>
+                  <button className={'btn btn-primary btn-sm' + (obj.client.clientName!==''?'':' disabled')} type="button"
+                    onClick={this.axiosReqForConfig}>
+                    GET for config
+                  </button>
+                </span>
+              </div>
+              <select style={{marginTop:'10px'}} multiple className='form-control input-sm shadow' onChange={this.updateStateObj.bind(this, 'client')}>
+                {
+                  clientlist_displayed.map(
+                    function(e, i) {
+                      return <option key={i} value={e._id}>{e.clientName}</option>
+                    }, this
+                  )
+                }
+              </select>
+            </div>
           </div>
-          <select style={{marginTop:'10px'}} multiple className='form-control input-sm shadow' onChange={this.updateStateObj.bind(this, 'client')}>
-            {
-              clientlist_displayed.map(
-                function(e, i) {
-                  return <option key={i} value={e.clientName}>{e.clientName}</option>
-                }, this
-              )
-            }
-          </select>
+          <div className='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+            <label>You will select the apps to unstall on client PC</label>
+            <ul>
+              {
+                applistForClient.map(function(e, i){ return <li>{e.appName}</li> })
+              }
+            </ul>
+            <p>Under construction...</p>
+          </div>
         </div>
         <hr />
 
-        <h1>App select Section</h1>
-        <label>You will select the apps to unstall for targer</label>
-        <p>Under construction...</p>
-        <hr />
-
-        <div style={{display:'none'}}>
+        <div style={{display: 'none'}}>
           <h1>Modal 1 Section</h1>
           <p>Under construction...</p>
           <Modal key={0}></Modal>
           <hr />
         </div>
 
-        <h1>react-rte test</h1>
-        <label>You could make new json</label>
-        <MyStatefulEditor updateFormState={this.props.updateFormState} />
-        <label>Result</label>
-        <input className='form-control input-sm' type='text' value={obj.currentFormState.editorString} disabled />
+        <h1>Editor Section (based on react-rte)</h1>
+        <div className='row'>
+          <div className='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+            <label>You could make new json</label>
+            <div className='shadow' >{/* style={{transform:'translate(0px,0px) scaleX(1.062) rotate3d(1, 0, .2, -8deg)'}} */}
+              <MyStatefulEditor updateFormState={this.props.updateFormState} style={{zIndex:'0'}} />
+            </div>
+            <div className='input-group pull-right'>
+              <button type="button"
+                className='btn btn-primary btn-sm'
+                style={{marginTop:'10px', marginBottom:'10px'}}
+                onClick={this.axiosReqToCreateNewJSON}>
+                AXIOS POST
+              </button>
+            </div>
+          </div>
+          <div className='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+            <label className='text-muted'>Result</label>
+
+            <div className='shadow special'>
+              <textarea
+                className='form-control input-sm expandable' type='text'
+                style={{height:"70px"}}
+                value={obj.currentFormState.editorString}
+                disabled></textarea>
+            </div>
+
+          </div>
+        </div>
 
       </div>
     );

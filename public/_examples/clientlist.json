@@ -1,5 +1,6 @@
 [
-  {"clientName": "Den", "configURL": "http://selection4test.ru/projects/gpo/_examples/configs/config0.json"},
-  {"clientName": "Marat", "configURL": "http://selection4test.ru/projects/gpo/_examples/configs/config1.json"},
-  {"clientName": "Tolyan", "configURL": "http://selection4test.ru/projects/gpo/_examples/configs/config2.json"}
+  {"clientName": "ОСТРОВ МО", "configURL": "http://selection4test.ru/projects/gpo/build/_examples/configs/config0.json"},
+  {"clientName": "Белая Гвардия", "configURL": "http://selection4test.ru/projects/gpo/build/_examples/configs/config1.json"},
+  {"clientName": "Бриз Климатические Системы", "configURL": "http://selection4test.ru/projects/gpo/build/_examples/configs/config2.json"},
+	{"clientName": "ВЕЗА Фрязино", "configURL": "http://selection4test.ru/projects/gpo/build/_examples/configs/config3.json"}
 ]

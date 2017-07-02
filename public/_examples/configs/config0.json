@@ -2,5 +2,7 @@
   {"appName": "gimp", "url": "http://pc.dotty.su/gimp.json", "ver": "2.3.4"},
   {"appName": "printer", "url": "http://pc.dotty.su/printer.json", "ver": "2.3.4"},
   {"appName": "1c", "url": "http://pc.dotty.su/1c.json", "ver": "1.2.3"},
-  {"appName": "word", "url": "http://pc.dotty.su/word.json", "ver": "2.3.4"}
+  {"appName": "word", "url": "http://pc.dotty.su/word.json", "ver": "2.3.4"},
+	{"appName": "chrome", "url": "http://pc.dotty.su/chrome.json", "ver": "57"},
+	{"appName": "Adobe Photoshop", "url": "http://pc.dotty.su/chrome.json", "ver": "7"}
 ]

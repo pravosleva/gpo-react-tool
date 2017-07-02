@@ -23,7 +23,7 @@ class MyStatefulEditor extends Component {
         value.toString('html')
       );
     }
-    this.props.updateFormState({ editorString: value.toString('markdown') })
+    this.props.updateFormState({ editorString: value.toString('markdown').replace(new RegExp('\n', 'g'), '').replace(new RegExp(' ', 'g'), '') })
   };
 
   render () {

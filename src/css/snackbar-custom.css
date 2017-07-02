@@ -7,7 +7,11 @@
     min-width:288px;max-width:568px;display:inline-flex;border-radius:2px;margin:24px;bottom:-100px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
-}@media(max-width:640px){ .snackbar-container{left:0;right:0; border-radius:0} }
+}@media(max-width:640px){
+  .snackbar-container{
+    left:0; right:0; border-radius:0
+  }
+}
 .snackbar-pos.bottom-center{top:auto!important;bottom:0;left:50%;transform:translate(-50%,-50%)}
 .snackbar-pos.bottom-left{top:auto!important;bottom:0;left:0}
 .snackbar-pos.bottom-right{top:auto!important;bottom:0;right:0}

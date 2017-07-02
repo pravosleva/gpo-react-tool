@@ -3,7 +3,7 @@ export default (
     currentFormState: {editorString: ''},
     clientlist: [],
     tmp_client: '',
-    client: '',
+    client: {clientName:'', configURL:'', _id:''},
     applistForClient: [],
     appForClient: ''
   },
