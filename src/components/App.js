@@ -280,7 +280,10 @@ class App extends Component {
             </div>
           </div>
           <div className='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
-            <label className='text-muted'>Result</label>
+            <label
+              className={isValidJSON(obj.currentFormState.editorString)===true?'text-success':'text-muted'}>
+              Result: {isValidJSON(obj.currentFormState.editorString)===true?'it is correct json string!':'json is not valid...'}
+            </label>
 
             <div className='shadow special'>
               <textarea
