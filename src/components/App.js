@@ -10,7 +10,7 @@ import Modal from './Modal';
 import '../css/snackbar-custom.css';
 import MyStatefulEditor from './MyStatefulEditor';
 
-show({text: '&#10004; Last Update at 2017-07-02', customClass: `alert alert-warning`, pos: `top-center`, duration:5000});
+show({text: '&#10004;&nbsp;&nbsp;Last Update at 2017-07-03', customClass: `alert alert-warning`, pos: `top-center`, duration:5000});
 
 class App extends Component {
   constructor(props){
@@ -36,7 +36,7 @@ class App extends Component {
         client_to_state = obj.clientlist.filter(function(el, i){return el._id===e.target.value}, this)[0];
         this.props.updateClient(client_to_state);
         this.props.updateTmpClient(client_to_state.clientName);
-        show({text: `&#10004; Ok! ${client_to_state.clientName} selected as Client.`, customClass: `alert alert-success`, pos: `top-center`, duration: 5000, pauseOnHover: true});
+        show({text: `&#10004;&nbsp;&nbsp;Ok! ${client_to_state.clientName} selected as Client.`, customClass: `alert alert-success`, pos: `top-center`, duration: 5000, pauseOnHover: true});
 
         this.setState({_ids_appsToInstall:[]});
         break;
@@ -78,23 +78,23 @@ class App extends Component {
         });
         // --- Tested.
         self.props.updateClientlist(clientlist);
-        show({text: `&#10004; It's Ok: ${clientlist.length} clients has taken from Back-end...`, customClass: `alert alert-success`, pos: `top-center`, duration: 5000, pauseOnHover: true});
+        show({text: `&#10004;&nbsp;&nbsp;It's Ok: ${clientlist.length} clients has taken from Back-end...`, customClass: `alert alert-success`, pos: `top-center`, duration: 5000, pauseOnHover: true});
       })
       .catch(function (error) {
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
-          show({text: `&#10008; Error response: ${error.response.data}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
+          show({text: `&#10008;&nbsp;&nbsp;Error response: ${error.response.data}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
           //console.log(error.response.status);
           //console.log(error.response.headers);
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
           // http.ClientRequest in node.js
-          show({text: `&#10008; Error request: ${error.config.url}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
+          show({text: `&#10008;&nbsp;&nbsp;Error request: ${error.config.url}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
         } else {
           // Something happened in setting up the request that triggered an Error
-          show({text: `&#10008; Error: ${error.message}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
+          show({text: `&#10008;&nbsp;&nbsp;Error: ${error.message}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
         }
         //console.log(error.config);
       });
@@ -113,11 +113,11 @@ class App extends Component {
       return newUUID;
     };
     if(this.props.obj.client===''){
-      show({text: `&#10008; Will you please select the Client...`, customClass: `alert alert-danger`, duration: 5000, pos: `top-center`, pauseOnHover: true});
+      show({text: `&#10008;&nbsp;&nbsp;Will you please select the Client...`, customClass: `alert alert-danger`, duration: 5000, pos: `top-center`, pauseOnHover: true});
       return;
     }else{
       //console.log(`${configURL}`);
-      //show({text: `&#10004; It's Ok: GET req will send to ${configURL}`, customClass: `alert alert-success`, pos: `top-center`, duration: 10000, pauseOnHover: true});
+      //show({text: `&#10004;&nbsp;&nbsp;It's Ok: GET req will send to ${configURL}`, customClass: `alert alert-success`, pos: `top-center`, duration: 10000, pauseOnHover: true});
     };
     axios({
       method: 'get',
@@ -132,23 +132,23 @@ class App extends Component {
         });
         // ---
         self.props.updateApplistForClient(applistForClient);
-        show({text: `&#10004; It's Ok: ${JSON.stringify(applistForClient.length)} apps are possible to install for this client.`, customClass: `alert alert-success`, pos: `top-center`, duration: 5000, pauseOnHover: true});
+        show({text: `&#10004;&nbsp;&nbsp;It's Ok: ${JSON.stringify(applistForClient.length)} apps are possible to install for this client.`, customClass: `alert alert-success`, pos: `top-center`, duration: 5000, pauseOnHover: true});
       })
       .catch(function (error) {
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
-          show({text: `&#10008; Error response: ${error.response.data}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
+          show({text: `&#10008;&nbsp;&nbsp;Error response: ${error.response.data}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
           //console.log(error.response.status);
           //console.log(error.response.headers);
         } else if (error.request) {
           // The request was made but no response was received
           // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
           // http.ClientRequest in node.js
-          show({text: `&#10008; Error request: ${error.config.url}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
+          show({text: `&#10008;&nbsp;&nbsp;Error request: ${error.config.url}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
         } else {
           // Something happened in setting up the request that triggered an Error
-          show({text: `&#10008; Error: ${error.message}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
+          show({text: `&#10008;&nbsp;&nbsp;Error: ${error.message}`, customClass: `alert alert-danger`, pos: `top-center`, duration: 60000, pauseOnHover: true});
         }
         //console.log(error.config);
       });
@@ -178,13 +178,13 @@ class App extends Component {
     this.setState({_ids_appsToInstall:[]});
   }
   axiosReqToCreateNewJSON() {
-    show({text: `&#10008; Sorry, this option is Under Construction yet...`, customClass: `alert alert-warning`, pos: `top-center`, duration: 5000, pauseOnHover: true});
+    show({text: `&#10008;&nbsp;&nbsp;Sorry, this option is Under Construction yet...`, customClass: `alert alert-warning`, pos: `top-center`, duration: 5000, pauseOnHover: true});
     // See this.props.obj.currentFormState.editorString
     //..
   }
   axiosReqToInstall() {
-    show({text: `&#10008; Sorry, this option is Under Construction yet...`, customClass: `alert alert-warning`, pos: `top-center`, duration: 5000, pauseOnHover: true});
-    // See this.state._ids_appsToInstall
+    show({text: `&#10008;&nbsp;&nbsp;Sorry, this option is Under Construction yet...`, customClass: `alert alert-warning`, pos: `top-center`, duration: 5000, pauseOnHover: true});
+    // See this.props.obj.applistForClient & this.state._ids_appsToInstall
     //..
   }
   render() {
@@ -193,6 +193,11 @@ class App extends Component {
       return e.clientName.toLowerCase().includes(obj.tmp_client.toLowerCase())
     }, this);
     let applistForClient = obj.applistForClient;
+
+    let isValidJSON = function(str){
+      try{ JSON.parse(str) }catch(e){ return false }
+      return true;
+    };
 
     return (
       <div className="container">
@@ -273,14 +278,6 @@ class App extends Component {
             <div className='shadow' >{/* style={{transform:'translate(0px,0px) scaleX(1.062) rotate3d(1, 0, .2, -8deg)'}} */}
               <MyStatefulEditor updateFormState={this.props.updateFormState} style={{zIndex:'0'}} />
             </div>
-            <div className='input-group pull-right'>
-              <button type="button"
-                className='btn btn-primary btn-sm'
-                style={{marginTop:'10px', marginBottom:'10px'}}
-                onClick={this.axiosReqToCreateNewJSON}>
-                AXIOS POST
-              </button>
-            </div>
           </div>
           <div className='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
             <label className='text-muted'>Result</label>
@@ -291,6 +288,14 @@ class App extends Component {
                 style={{height:"70px"}}
                 value={obj.currentFormState.editorString}
                 disabled></textarea>
+            </div>
+            <div className='btn-group pull-right' style={{display:(isValidJSON(obj.currentFormState.editorString)===true?'block':'none')}}>
+              <button type="button"
+                className='btn btn-primary btn-sm'
+                style={{marginTop:'10px', marginBottom:'10px'}}
+                onClick={this.axiosReqToCreateNewJSON}>
+                AXIOS POST to create new instruction
+              </button>
             </div>
 
           </div>
